@@ -1,4 +1,4 @@
-module dy-mcp-server
+module github.com/dyl0115/dy-mcp-server
 
 go 1.25.0
 

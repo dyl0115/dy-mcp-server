@@ -1,0 +1,20 @@
+# .github/workflows/deploy.yml
+name: Deploy dy-mcp-server
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to OCI
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.OCI_HOST }}
+          username: ${{ secrets.OCI_USER }}
+          key: ${{ secrets.OCI_SSH_KEY }}
+          script: |
+            go install github.com/dyl0115/dy-mcp-server@latest
+            pm2 restart dy-mcp-server
