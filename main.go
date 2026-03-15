@@ -431,5 +431,6 @@ func main() {
 		return server
 	}, nil)
 
-	http.ListenAndServe(":8080", handler)
+	fmt.Println("dy-mcp-server listening on :3000")
+	http.ListenAndServe(":3000", handler)
 }
