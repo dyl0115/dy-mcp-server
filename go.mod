@@ -1,6 +1,6 @@
 module github.com/dyl0115/dy-mcp-server
 
-go 1.25.0
+go 1.22.2
 
 require (
 	github.com/google/jsonschema-go v0.4.2 // indirect
