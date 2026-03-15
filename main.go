@@ -429,7 +429,9 @@ func main() {
 
 	handler := mcp.NewStreamableHTTPHandler(func(r *http.Request) *mcp.Server {
 		return server
-	}, nil)
+	}, &mcp.StreamableHTTPOptions{
+		Stateless: true,
+	})
 
 	// port 3000
 	fmt.Println("dy-mcp-server listening on :3000")
