@@ -430,7 +430,8 @@ func main() {
 	handler := mcp.NewStreamableHTTPHandler(func(r *http.Request) *mcp.Server {
 		return server
 	}, &mcp.StreamableHTTPOptions{
-		Stateless: true,
+		Stateless:                  true,
+		DisableLocalhostProtection: true, // 추가!
 	})
 
 	// port 3000
