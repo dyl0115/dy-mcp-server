@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -434,7 +435,10 @@ func main() {
 		DisableLocalhostProtection: true, // 추가!
 	})
 
-	// port 3000
-	fmt.Println("dy-mcp-server listening on :3000")
-	http.ListenAndServe(":3000", handler)
+	log.Fatal(http.ListenAndServeTLS(
+		":443",
+		"/etc/letsencrypt/live/dymcp.duckdns.org/fullchain.pem",
+		"/etc/letsencrypt/live/dymcp.duckdns.org/privkey.pem",
+		handler,
+	))
 }

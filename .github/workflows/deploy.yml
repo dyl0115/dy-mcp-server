@@ -1,5 +1,4 @@
-# .github/workflows/deploy.yml
-name: Deploy dy-mcp-server
+name: Deploy dy-mcp-server(pre)
 
 on:
   push:
@@ -9,12 +8,33 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to OCI
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Go 설치
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+
+      - name: ARM64 빌드
+        run: GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o dy-mcp-server .
+
+      - name: 바이너리 업로드
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.OCI_HOST }}
+          username: ${{ secrets.OCI_USER }}
+          key: ${{ secrets.OCI_SSH_KEY }}
+          source: "dy-mcp-server"
+          target: "/home/ubuntu/"
+
+      - name: 서버 실행
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.OCI_HOST }}
           username: ${{ secrets.OCI_USER }}
           key: ${{ secrets.OCI_SSH_KEY }}
           script: |
-            go install github.com/dyl0115/dy-mcp-server@latest
-            pm2 restart dy-mcp-server
+            pkill dy-mcp-server || true
+            chmod +x /home/ubuntu/dy-mcp-server
+            nohup /home/ubuntu/dy-mcp-server > /home/ubuntu/mcp.log 2>&1 &
