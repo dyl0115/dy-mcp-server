@@ -16,8 +16,8 @@ jobs:
         with:
           go-version: "1.25"
 
-      - name: ARM64 빌드
-        run: GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -o dy-mcp-server .
+      - name: amd64 빌드
+        run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o dy-mcp-server .
 
       - name: 바이너리 업로드
         uses: appleboy/scp-action@v1
