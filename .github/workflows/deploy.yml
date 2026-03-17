@@ -35,6 +35,6 @@ jobs:
           username: ${{ secrets.OCI_USER }}
           key: ${{ secrets.OCI_SSH_KEY }}
           script: |
-            pkill dy-mcp-server || true
+            sudo pkill dy-mcp-server || true
             chmod +x /home/ubuntu/dy-mcp-server
-            nohup /home/ubuntu/dy-mcp-server > /home/ubuntu/mcp.log 2>&1 &
+            sudo nohup /home/ubuntu/dy-mcp-server > /home/ubuntu/mcp.log 2>&1 &
