@@ -1,0 +1,29 @@
+id: dy-mcp-server
+port: 8080
+path: /mcp
+
+INIT:
+  - which go || (apt install -y golang-go)
+  - cd /opt/cup-services/dy-mcp-server && go build -o dy-mcp-server .
+  - cp /opt/cup-services/dy-mcp-server/dy-mcp-server /usr/local/bin/dy-mcp-server
+  - cp /opt/cup-services/dy-mcp-server/dy-mcp-server.service /etc/systemd/system/dy-mcp-server.service
+  - systemctl daemon-reload
+  - systemctl enable dy-mcp-server
+
+START:
+  - systemctl start dy-mcp-server
+
+STOP:
+  - systemctl stop dy-mcp-server
+
+RESTART:
+  - systemctl restart dy-mcp-server
+
+PING:
+  - systemctl is-active dy-mcp-server
+
+TERMINATE:
+  - systemctl disable --now dy-mcp-server
+  - rm -f /usr/local/bin/dy-mcp-server
+  - rm -f /etc/systemd/system/dy-mcp-server.service
+  - systemctl daemon-reload

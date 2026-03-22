@@ -1,0 +1,11 @@
+[Unit]
+Description=dy-mcp-server
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/dy-mcp-server
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
